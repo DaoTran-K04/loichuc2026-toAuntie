@@ -1,70 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy New Year 2026!</title>
+    <title>Chúc Mừng Năm Mới 2026!</title>
     <style>
+        /* Import font chữ đẹp, hỗ trợ tiếng Việt */
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap');
 
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
             overflow: hidden;
-            /* Nền chuyển màu đỏ ấm áp sang tím đậm */
+            /* Nền đỏ tía sang trọng, ấm cúng */
             background: linear-gradient(135deg, #4a0e0e, #1a0a2e);
             font-family: 'Nunito', sans-serif;
         }
 
         canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none;}
 
-        /* Khung thiệp chính */
+        /* Container chính */
         .card-container {
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 85%; max-width: 550px;
-            /* Hiệu ứng kính mờ sang trọng */
-            background: rgba(40, 10, 10, 0.65);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 40px; border-radius: 25px;
-            border: 2px solid rgba(255, 223, 0, 0.3);
+            width: 85%; max-width: 500px;
+            /* Hiệu ứng kính mờ */
+            background: rgba(40, 10, 10, 0.7);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            padding: 30px; border-radius: 25px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
             text-align: center; color: #fff; z-index: 10;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            opacity: 0; animation: floatUp 1.5s ease-out forwards;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+            opacity: 0; animation: floatUp 1.2s ease-out forwards;
         }
 
+        /* --- PHẦN KHUNG ẢNH --- */
+        .photo-wrapper {
+            display: flex; justify-content: center; gap: 15px;
+            margin-bottom: 25px; position: relative;
+            height: 140px; /* Chiều cao cố định cho khu vực ảnh */
+        }
+
+        .photo-frame {
+            background: #fff; padding: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease, z-index 0s linear 0.15s; /* Thêm delay cho z-index */
+            width: 130px; height: 130px;
+            position: absolute; /* Để xếp chồng ảnh lên nhau dễ hơn */
+        }
+        
+        .photo-frame img {
+            width: 100%; height: 100%; object-fit: cover;
+            display: block;
+        }
+
+        /* Sắp xếp vị trí 2 ảnh */
+        .photo-1 { 
+            transform: rotate(-8deg) translate(-30px, 5px); 
+            z-index: 1; 
+        }
+        .photo-2 { 
+            transform: rotate(5deg) translate(30px, 15px); 
+            z-index: 2; 
+        }
+        
+        /* Hiệu ứng khi di chuột vào ảnh - Ảnh sẽ nổi lên trên cùng */
+        .photo-frame:hover { 
+            transform: scale(1.15) rotate(0deg) translate(0, 0) !important; 
+            z-index: 100; 
+            transition: transform 0.3s ease, z-index 0s; /* Bỏ delay khi hover */
+            cursor: pointer; 
+        }
+
+
+        /* --- PHẦN CHỮ --- */
         h1 {
             font-family: 'Dancing Script', cursive;
-            font-size: 3rem; margin-bottom: 25px;
-            /* Chữ màu vàng kim loại */
-            color: #ffd700;
+            font-size: 2.5rem; margin-bottom: 15px; color: #ffd700;
             text-shadow: 0 2px 10px rgba(255, 94, 0, 0.6);
+            line-height: 1.2;
         }
 
-        p {
-            line-height: 1.8; font-size: 1.1rem;
-            color: #f0e6d2; margin-bottom: 25px;
-        }
-
-        /* Tô điểm các từ khóa */
-        .highlight-name { color: #ffd700; font-weight: 700; font-size: 1.2rem;}
+        p { line-height: 1.6; font-size: 1.05rem; color: #f0e6d2; margin-bottom: 18px; }
+        .highlight-name { color: #ffd700; font-weight: 700; font-size: 1.15rem;}
         .highlight-wish { color: #ffab40; font-weight: 700; }
-        
-        .signature {
-            margin-top: 35px; font-style: italic; opacity: 0.9;
-            font-size: 1rem; color: #ffd700;
-        }
+        .signature { margin-top: 25px; font-style: italic; opacity: 0.9; font-size: 1rem; color: #ffd700; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;}
 
         @keyframes floatUp {
             from { opacity: 0; transform: translate(-50%, -40%); }
             to { opacity: 1; transform: translate(-50%, -50%); }
         }
 
-        /* Responsive cho điện thoại nhỏ */
+        /* Mobile responsive */
         @media (max-width: 400px) {
-            h1 { font-size: 2.4rem; }
-            p { font-size: 1rem; }
-            .card-container { padding: 30px 20px; }
+            .photo-frame { width: 100px; height: 100px; }
+            .photo-wrapper { height: 110px; }
+            .photo-1 { transform: rotate(-8deg) translate(-20px, 5px); }
+            .photo-2 { transform: rotate(5deg) translate(20px, 10px); }
+            h1 { font-size: 2rem; }
+            p { font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -73,69 +106,58 @@
     <canvas id="canvas"></canvas>
 
     <div class="card-container">
+        <div class="photo-wrapper">
+            <div class="photo-frame photo-1">
+                <img src="image_0.png" alt="Kỷ niệm gia đình sum vầy">
+            </div>
+            <div class="photo-frame photo-2">
+                <img src="image_1.png" alt="Jennifer và những hành trình mới">
+            </div>
+        </div>
+
         <h1>Happy New Year 2026!</h1>
         <p>
-            To <span class="highlight-name">Auntie Le, Uncle Khanh, and Jennifer!</span>
+            Gửi <span class="highlight-name">Dì Lê, Chú Khánh và em Jennifer!</span>
         </p>
         <p>
-            Wishing your family a year filled with <span class="highlight-wish">health, laughter, and togetherness.</span>
+            Nhìn lại những khoảnh khắc sum vầy này, cháu càng thêm trân quý những kỷ niệm đẹp bên gia đình mình. Cháu chúc cả nhà một năm mới 2026 thật nhiều <span class="highlight-wish">sức khỏe, tiếng cười và luôn gắn kết bên nhau.</span>
         </p>
         <p>
-            To <span class="highlight-name">Jennifer</span>—it’s amazing watching you grow up; I hope this year brings you <span class="highlight-wish">exciting new adventures.</span>
+            Riêng <span class="highlight-name">Jennifer</span> – nhìn em ngày càng khôn lớn thật tuyệt vời. Mong rằng năm nay sẽ mang đến cho em những <span class="highlight-wish">hành trình mới đầy thú vị và rực rỡ</span> như chính nụ cười của em vậy!
         </p>
         <div class="signature">
-            Sending much love to all of you for a wonderful 2026! ❤️
+            Gửi ngàn lời yêu thương đến cả nhà từ Việt Nam! ❤️
         </div>
     </div>
 
     <script>
-        // --- HIỆU ỨNG ĐỐM SÁNG BAY LÊN (GENTLE PARTICLES) ---
+        // --- HIỆU ỨNG ĐỐM SÁNG (Giữ nguyên như cũ) ---
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
         let w, h, particles = [];
-
         function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
         window.addEventListener("resize", resize); resize();
-
         function random(min, max) { return Math.random() * (max - min) + min; }
-
         function Particle() {
-            this.x = random(0, w);
-            this.y = h + random(0, 200); // Bắt đầu từ dưới màn hình
-            this.speed = random(0.5, 1.5); // Tốc độ bay chậm
-            this.radius = random(1, 4); // Kích thước hạt
+            this.x = random(0, w); this.y = h + random(0, 200);
+            this.speed = random(0.5, 1.5); this.radius = random(1, 4);
             this.opacity = random(0.3, 0.8);
-            // Màu vàng cam ấm áp
             this.color = `rgba(255, ${random(150, 220)}, ${random(0, 100)}, ${this.opacity})`;
-            this.wobble = random(0, Math.PI * 2); // Góc lắc lư
+            this.wobble = random(0, Math.PI * 2);
         }
-
         Particle.prototype.update = function() {
-            this.y -= this.speed; // Bay lên
-            this.wobble += 0.02;
-            this.x += Math.sin(this.wobble) * 0.5; // Lắc lư nhẹ sang 2 bên
-            if (this.y < -50) { // Nếu bay quá màn hình thì reset xuống dưới
-                this.y = h + 50;
-                this.x = random(0, w);
-            }
+            this.y -= this.speed; this.wobble += 0.02;
+            this.x += Math.sin(this.wobble) * 0.5;
+            if (this.y < -50) { this.y = h + 50; this.x = random(0, w); }
         }
-
         Particle.prototype.draw = function() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = this.color;
-            ctx.shadowBlur = 15; // Tạo hiệu ứng phát sáng
-            ctx.shadowColor = "#ff6b00";
-            ctx.fill();
-            ctx.shadowBlur = 0;
+            ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = this.color; ctx.shadowBlur = 15; ctx.shadowColor = "#ff6b00";
+            ctx.fill(); ctx.shadowBlur = 0;
         }
-
-        // Tạo 80 hạt
         for(let i = 0; i < 80; i++) { particles.push(new Particle()); }
-
         function loop() {
-            ctx.clearRect(0, 0, w, h); // Xóa canvas
-            particles.forEach(p => { p.update(); p.draw(); });
+            ctx.clearRect(0, 0, w, h); particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(loop);
         }
         loop();
