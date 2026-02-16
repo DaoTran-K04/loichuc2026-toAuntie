@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year 2026!</title>
+    <style>
+        /* Import Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap');
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            overflow: hidden;
+            /* Deep red to dark purple gradient for a warm, premium look */
+            background: linear-gradient(135deg, #4a0e0e, #1a0a2e);
+            font-family: 'Nunito', sans-serif;
+        }
+
+        canvas { display: block; position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none;}
+
+        /* Main Card Container */
+        .card-container {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85%; max-width: 500px;
+            /* Frosted glass effect */
+            background: rgba(40, 10, 10, 0.7);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            padding: 30px; border-radius: 25px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            text-align: center; color: #fff; z-index: 10;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.6);
+            opacity: 0; animation: floatUp 1.2s ease-out forwards;
+        }
+
+        /* --- PHOTO SECTION --- */
+        .photo-wrapper {
+            display: flex; justify-content: center; gap: 15px;
+            margin-bottom: 25px; position: relative;
+            height: 140px; 
+        }
+
+        .photo-frame {
+            background: #fff; padding: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease, z-index 0s linear 0.15s; 
+            width: 130px; height: 130px;
+            position: absolute; 
+        }
+        
+        .photo-frame img {
+            width: 100%; height: 100%; object-fit: cover;
+            display: block;
+        }
+
+        /* Photo positioning */
+        .photo-1 { 
+            transform: rotate(-8deg) translate(-30px, 5px); 
+            z-index: 1; 
+        }
+        .photo-2 { 
+            transform: rotate(5deg) translate(30px, 15px); 
+            z-index: 2; 
+        }
+        
+        /* Hover effect */
+        .photo-frame:hover { 
+            transform: scale(1.15) rotate(0deg) translate(0, 0) !important; 
+            z-index: 100; 
+            transition: transform 0.3s ease, z-index 0s; 
+            cursor: pointer; 
+        }
+
+        /* --- TEXT SECTION --- */
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem; margin-bottom: 15px; color: #ffd700;
+            text-shadow: 0 2px 10px rgba(255, 94, 0, 0.6);
+            line-height: 1.2;
+        }
+
+        p { line-height: 1.6; font-size: 1.05rem; color: #f0e6d2; margin-bottom: 18px; }
+        .highlight-name { color: #ffd700; font-weight: 700; font-size: 1.15rem;}
+        .highlight-wish { color: #ffab40; font-weight: 700; }
+        
+        .signature { 
+            margin-top: 25px; font-style: italic; opacity: 0.9; font-size: 1rem; color: #ffd700; 
+            border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;
+        }
+
+        @keyframes floatUp {
+            from { opacity: 0; transform: translate(-50%, -40%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 400px) {
+            .photo-frame { width: 100px; height: 100px; }
+            .photo-wrapper { height: 110px; }
+            .photo-1 { transform: rotate(-8deg) translate(-20px, 5px); }
+            .photo-2 { transform: rotate(5deg) translate(20px, 10px); }
+            h1 { font-size: 2rem; }
+            p { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <div class="card-container">
+        <div class="photo-wrapper">
+            <div class="photo-frame photo-1">
+                <img src="image_0.jfif" alt="Family Memories">
+            </div>
+            <div class="photo-frame photo-2">
+                <img src="image_1.jfif" alt="New Adventures">
+            </div>
+        </div>
+
+        <h1>Happy New Year 2026!</h1>
+        <p>
+            To <span class="highlight-name">Auntie Le, Uncle Khanh, and Jennifer!</span>
+        </p>
+        <p>
+            Looking back at these cherished moments makes me appreciate our family bond even more. Wishing you all a year filled with <span class="highlight-wish">health, laughter, and togetherness.</span>
+        </p>
+        <p>
+            To <span class="highlight-name">Jennifer</span>—it’s amazing watching you grow up. May this year bring you <span class="highlight-wish">exciting new adventures</span> and a bright journey ahead!
+        </p>
+        <div class="signature">
+            Sending much love to all of you from Vietnam! ❤️
+        </div>
+    </div>
+
+    <script>
+        // --- PARTICLE EFFECT (Floating Golden Lights) ---
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        let w, h, particles = [];
+        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+        window.addEventListener("resize", resize); resize();
+        function random(min, max) { return Math.random() * (max - min) + min; }
+        function Particle() {
+            this.x = random(0, w); this.y = h + random(0, 200);
+            this.speed = random(0.5, 1.5); this.radius = random(1, 4);
+            this.opacity = random(0.3, 0.8);
+            this.color = `rgba(255, ${random(150, 220)}, ${random(0, 100)}, ${this.opacity})`;
+            this.wobble = random(0, Math.PI * 2);
+        }
+        Particle.prototype.update = function() {
+            this.y -= this.speed; this.wobble += 0.02;
+            this.x += Math.sin(this.wobble) * 0.5;
+            if (this.y < -50) { this.y = h + 50; this.x = random(0, w); }
+        }
+        Particle.prototype.draw = function() {
+            ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = this.color; ctx.shadowBlur = 15; ctx.shadowColor = "#ff6b00";
+            ctx.fill(); ctx.shadowBlur = 0;
+        }
+        for(let i = 0; i < 80; i++) { particles.push(new Particle()); }
+        function loop() {
+            ctx.clearRect(0, 0, w, h); particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
+</body>
+</html>
